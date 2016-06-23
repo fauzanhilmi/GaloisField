@@ -8,30 +8,48 @@ namespace GaloisField
 {
     class Field
     {
-        //Irreducible polynomial used : x^8 + x^4 + x^3 + x^2 + 1 (0x11D)
-        public const byte polynomial = 0x1D; //0x11D & 0xFF
+        public const int order = 256;
+        //Irreducible polynomial used : x^8 + x^4 + x^3 + x^2 + 1 (0x11D) with generator = 0x2
+        public const int polynomial = 0x11D;
+        public const byte generator = 0x2;
+        //TEST
+        //public const int polynomial = 0x11B;         
+        //public const byte generator = 0x3;
         public static byte[] Exp;
         public static byte[] Log;
 
-        private byte number;
+        private byte value;
 
         static Field()
+        //generates Exp & Log table
         {
+            Exp = new byte[order];
+            Log = new byte[order];
 
+            byte val = 0x01;
+            for(int i=0; i<order; i++)
+            {
+                Exp[i] = val;
+                if (i < order - 1)
+                {
+                    Log[val] = (byte)i;
+                }
+                val = multiply(generator,val);
+            }
         }
 
         public Field()
         {
-            number = 0; 
+            value = 0; 
         }
 
-        public Field(byte _number)
+        public Field(byte _value)
         {
-            number = _number;
+            value = _value;
         }
 
-        private byte multiply(byte a, byte b) 
-        //used in exp & log table generation
+        private static byte multiply(byte a, byte b) 
+        //used only in Exp & Log table generation
         //implemented with Russian Peasant Multiplication algorithm
         {
             byte result = 0;
@@ -47,7 +65,7 @@ namespace GaloisField
                 aa <<= 1;
                 if (highest_bit != 0)
                 {
-                    aa ^= polynomial;
+                    aa ^= (polynomial & 0xFF);
                 }
                 bb >>= 1;
             }
@@ -61,7 +79,12 @@ namespace GaloisField
         static void Main(string[] args)
         {
             Field f = new Field();
-            //Console.WriteLine(f.multiply(255,239));
+            for(int i=0; i<Field.order; i++)
+            {
+                //Console.WriteLine(i.ToString("x") + " : "+Field.Log[i].ToString("x"));
+                Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x"));
+                //Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x")+", "+ Field.Log[i].ToString("x"));
+            }
             Console.ReadLine();
         }
     }
