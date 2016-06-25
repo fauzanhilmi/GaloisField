@@ -20,8 +20,8 @@ namespace GaloisField
 
         private byte value;
 
+        //generates Exp & Log table for fast multiplication
         static Field()
-        //generates Exp & Log table
         {
             Exp = new byte[order];
             Log = new byte[order];
@@ -48,9 +48,25 @@ namespace GaloisField
             value = _value;
         }
 
-        private static byte multiply(byte a, byte b) 
+        /*public static Field operator* (Field a, Field b)
+        {
+
+        }*/
+
+        //getters and setters
+        public byte getValue()
+        {
+            return value;
+        }
+
+        public void setValue(byte _value)
+        {
+            value = _value;
+        }
+
         //used only in Exp & Log table generation
         //implemented with Russian Peasant Multiplication algorithm
+        private static byte multiply(byte a, byte b) 
         {
             byte result = 0;
             byte aa = a;
@@ -71,7 +87,6 @@ namespace GaloisField
             }
             return result;
         }
-
     }
     
     class Program
