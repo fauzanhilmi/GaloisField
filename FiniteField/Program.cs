@@ -20,6 +20,16 @@ namespace GaloisField
 
         private byte value;
 
+        public Field()
+        {
+            value = 0;
+        }
+
+        public Field(byte _value)
+        {
+            value = _value;
+        }
+
         //generates Exp & Log table for fast multiplication operator
         static Field()
         {
@@ -38,16 +48,6 @@ namespace GaloisField
             }
         }
 
-        public Field()
-        {
-            value = 0; 
-        }
-
-        public Field(byte _value)
-        {
-            value = _value;
-        }
-
         //getters and setters
         public byte getValue()
         {
@@ -60,16 +60,45 @@ namespace GaloisField
         }
 
         //operators
-        public static Field operator* (Field a, Field b)
+        public static Field operator+ (Field Fa, Field Fb)
+        {
+            byte bres = (byte)(Fa.value ^ Fb.value);
+            return new Field(bres);
+        }
+
+        public static Field operator- (Field Fa, Field Fb)
+        {
+            byte bres = (byte)(Fa.value ^ Fb.value);
+            return new Field(bres);
+        }
+
+        public static Field operator* (Field Fa, Field Fb)
         {
             Field FRes = new Field(0);
-            if (a.value !=0 && b.value != 0)
+            if (Fa.value !=0 && Fb.value != 0)
             {
-                byte bres = (byte)((Log[a.value] + Log[b.value]) % (order-1));
+                byte bres = (byte)((Log[Fa.value] + Log[Fb.value]) % (order-1));
                 bres = Exp[bres];
                 FRes.value = bres;
             }
             return FRes;
+        }
+
+        public static Field operator/ (Field Fa, Field Fb)
+        {
+            if (Fb.value == 0)
+            {
+                throw new System.ArgumentException("Divisor cannot be 0","Fb");
+            }
+
+            Field Fres = new Field(0);
+            if (Fa.value != 0)
+            {
+                byte bres = (byte)(((order-1) + Log[Fa.value] - Log[Fb.value]) % (order-1));
+                bres = Exp[bres];
+                Fres.value = bres;
+            }
+            return Fres;
         }
 
         //multiplication method which is only used in Exp & Log table generation
@@ -108,9 +137,9 @@ namespace GaloisField
                 Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x"));
                 //Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x")+", "+ Field.Log[i].ToString("x"));
             }*/
-            Field f1 = new Field(234);
-            Field f2 = new Field(17);
-            Field f3 = f1 * f2;
+            Field f1 = new Field(7);
+            Field f2 = new Field(2);
+            Field f3 = f1 - f2;
             Console.WriteLine(f3.getValue());
             Console.ReadLine();
         }
