@@ -20,7 +20,7 @@ namespace GaloisField
 
         private byte value;
 
-        //generates Exp & Log table for fast multiplication
+        //generates Exp & Log table for fast multiplication operator
         static Field()
         {
             Exp = new byte[order];
@@ -48,11 +48,6 @@ namespace GaloisField
             value = _value;
         }
 
-        /*public static Field operator* (Field a, Field b)
-        {
-
-        }*/
-
         //getters and setters
         public byte getValue()
         {
@@ -64,7 +59,20 @@ namespace GaloisField
             value = _value;
         }
 
-        //used only in Exp & Log table generation
+        //operators
+        public static Field operator* (Field a, Field b)
+        {
+            Field FRes = new Field(0);
+            if (a.value !=0 && b.value != 0)
+            {
+                byte bres = (byte)((Log[a.value] + Log[b.value]) % (order-1));
+                bres = Exp[bres];
+                FRes.value = bres;
+            }
+            return FRes;
+        }
+
+        //multiplication method which is only used in Exp & Log table generation
         //implemented with Russian Peasant Multiplication algorithm
         private static byte multiply(byte a, byte b) 
         {
@@ -93,13 +101,17 @@ namespace GaloisField
     {
         static void Main(string[] args)
         {
-            Field f = new Field();
+            /*Field f = new Field();
             for(int i=0; i<Field.order; i++)
             {
                 //Console.WriteLine(i.ToString("x") + " : "+Field.Log[i].ToString("x"));
                 Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x"));
                 //Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x")+", "+ Field.Log[i].ToString("x"));
-            }
+            }*/
+            Field f1 = new Field(234);
+            Field f2 = new Field(17);
+            Field f3 = f1 * f2;
+            Console.WriteLine(f3.getValue());
             Console.ReadLine();
         }
     }
