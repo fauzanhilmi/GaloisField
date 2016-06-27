@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GaloisField
 {
@@ -101,6 +97,36 @@ namespace GaloisField
             return Fres;
         }
 
+        public static bool operator== (Field Fa, Field Fb)
+        {
+            return (Fa.value == Fb.value);
+        }
+
+        public static bool operator !=(Field Fa, Field Fb)
+        {
+            return !(Fa.value == Fb.value);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            Field F = obj as Field;
+            if((System.Object)F == null)
+            {
+                return false;
+            }
+            return (value == F.value);
+        }
+
+        public override int GetHashCode()
+        {
+            return value;
+        }
+
         //multiplication method which is only used in Exp & Log table generation
         //implemented with Russian Peasant Multiplication algorithm
         private static byte multiply(byte a, byte b) 
@@ -137,10 +163,10 @@ namespace GaloisField
                 Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x"));
                 //Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x")+", "+ Field.Log[i].ToString("x"));
             }*/
-            Field f1 = new Field(7);
+            Field f1 = new Field(3);
             Field f2 = new Field(2);
             Field f3 = f1 - f2;
-            Console.WriteLine(f3.getValue());
+            Console.WriteLine(f1==f2);
             Console.ReadLine();
         }
     }
