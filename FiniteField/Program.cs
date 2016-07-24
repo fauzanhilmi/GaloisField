@@ -5,8 +5,9 @@ namespace GaloisField
     class Field
     {
         public const int order = 256;
-        //Irreducible polynomial used : x^8 + x^4 + x^3 + x^2 + 1 (0x11D) with generator = 0x2
+        //irreducible polynomial used : x^8 + x^4 + x^3 + x^2 + 1 (0x11D)
         public const int polynomial = 0x11D;
+        //generator to be used in Exp & Log table generation
         public const byte generator = 0x2;
         public static byte[] Exp;
         public static byte[] Log;
