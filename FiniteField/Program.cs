@@ -8,9 +8,6 @@ namespace GaloisField
         //Irreducible polynomial used : x^8 + x^4 + x^3 + x^2 + 1 (0x11D) with generator = 0x2
         public const int polynomial = 0x11D;
         public const byte generator = 0x2;
-        //TEST
-        //public const int polynomial = 0x11B;         
-        //public const byte generator = 0x3;
         public static byte[] Exp;
         public static byte[] Log;
 
@@ -156,17 +153,11 @@ namespace GaloisField
     {
         static void Main(string[] args)
         {
-            /*Field f = new Field();
-            for(int i=0; i<Field.order; i++)
-            {
-                //Console.WriteLine(i.ToString("x") + " : "+Field.Log[i].ToString("x"));
-                Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x"));
-                //Console.WriteLine(i.ToString("x") + " : " + Field.Exp[i].ToString("x")+", "+ Field.Log[i].ToString("x"));
-            }*/
+            //usage example
             Field f1 = new Field(3);
             Field f2 = new Field(2);
             Field f3 = f1 - f2;
-            Console.WriteLine(f1==f2);
+            Console.WriteLine(f3);
             Console.ReadLine();
         }
     }
