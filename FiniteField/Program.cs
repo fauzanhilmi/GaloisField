@@ -54,6 +54,17 @@ namespace GaloisField
         }
 
         //operators
+        public static explicit operator Field(byte b)
+        {
+            Field f = new Field(b);
+            return f;
+        }
+
+        public static explicit operator byte(Field f)
+        {
+            return f.value;
+        }
+
         public static Field operator+ (Field Fa, Field Fb)
         {
             byte bres = (byte)(Fa.value ^ Fb.value);
