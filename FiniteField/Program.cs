@@ -146,6 +146,11 @@ namespace GaloisField
             return value;
         }
 
+        public override string ToString()
+        {
+            return value.ToString();
+        }
+
         //multiplication method which is only used in Exp & Log table generation
         //implemented with Russian Peasant Multiplication algorithm
         private static byte multiply(byte a, byte b) 
