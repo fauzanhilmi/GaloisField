@@ -106,6 +106,16 @@ namespace GaloisField
             return Fres;
         }
 
+        public static Field pow(Field f, byte exp)
+        {
+            Field fres = new Field(1);
+            for (byte i = 0; i < exp; i++)
+            {
+                fres *= f;
+            }
+            return fres;
+        }
+
         public static bool operator== (Field Fa, Field Fb)
         {
             return (Fa.value == Fb.value);
