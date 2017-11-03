@@ -10,6 +10,7 @@ These are the operators that are implemented.
 * Substraction (-)
 * Multiplication (*)
 * Division (/)
+* Power
 * Equality Check (==)
 * Inequality Check (!=)
 
